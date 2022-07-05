@@ -35,6 +35,7 @@ spring:
             preLogger: false
             postLogger: true
       routes:
+# 로그인-> POST로 전송
         - id: userServiceLogin
           uri: lb://USERSERVICE
           predicates:
@@ -42,6 +43,7 @@ spring:
             - Method=POST
           filters:
             - CustomFilter
+# 토큰으로 받아와서 내 정보 보기
         - id: userServiceMe
           uri: lb://USERSERVICE
           predicates:
@@ -49,6 +51,7 @@ spring:
             - Method=GET
           filters:
             - CustomFilter
+# 가입한 카페/가입하지 않은 카페
         - id: cafeServiceMy
           uri: lb://CAFESERVICE
           predicates:
