@@ -1,0 +1,66 @@
+
+server:
+  port: 8000
+
+eureka:
+  server:
+    wait-time-in-ms-when-sync-empty: 0
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+spring:
+  application:
+    name: dafaultgateway
+  cloud:
+    gateway:
+      globalcore:
+        cors-configurations:
+          '[/**]':
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - OPTION
+            allowedOrigins:
+              - "http://localhost:3000"
+            allowedHeaders: "*"
+      default-filters:
+        - name: GlobalFilter
+          args:
+            baseMessage: hello-world
+            preLogger: false
+            postLogger: true
+      routes:
+        - id: userServiceLogin
+          uri: lb://USERSERVICE
+          predicates:
+            - Path=/user/login
+            - Method=POST
+          filters:
+            - CustomFilter
+        - id: userServiceMe
+          uri: lb://USERSERVICE
+          predicates:
+            - Path=/user/me
+            - Method=GET
+          filters:
+            - CustomFilter
+
+
+#   Netty started on port 8000
+#  Netty ? ????
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, httptrace
+token:
+  secret: user_token
+
+jwt:
+  secret_key: asdfghjkl
+  expTime: 864000000
