@@ -49,6 +49,11 @@ spring:
             - Method=GET
           filters:
             - CustomFilter
+        - id: cafeServiceMy
+          uri: lb://CAFESERVICE
+          predicates:
+            - Path=/cafe/my
+            - Method=GET
 
 
 #   Netty started on port 8000
