@@ -84,6 +84,31 @@ spring:
           predicates:
             - Path=/category/**
             - Method=PUT
+        # 댓글 수정
+        - id: commentServiceU
+          uri: lb://COMMENTSERVICE
+          predicates:
+            - Path=/comment/**
+            - Method=PUT
+        # 댓글 삭제
+        - id: commentServiceD
+          uri: lb://COMMENTSERVICE
+          predicates:
+            - Path=/comment/**
+            - Method=DELETE
+        # 댓글 추가
+        - id: commentServiceC
+          uri: lb://COMMENTSERVICE
+          predicates:
+            - Path=/comment
+            - Method=POST
+        # 댓글 조회
+        - id: commentServiceR
+          uri: lb://COMMENTSERVICE
+          predicates:
+            - Path=/comment/**
+            - Method=GET
+
 
 
 #   Netty started on port 8000
